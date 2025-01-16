@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
 from task1 import views
-from task1.views import Platform, Cart, menu
+from task1.views import Platform, Cart, menu, news
 
 
 urlpatterns = [
@@ -28,4 +28,5 @@ urlpatterns = [
     path('platform/', Platform.as_view()),
     path('platform/games/', menu),
     path('platform/cart/', Cart.as_view()),
+    path('platform/news/', news),
 ]

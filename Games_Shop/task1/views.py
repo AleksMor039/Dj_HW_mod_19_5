@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.http import HttpResponse
 from .forms import UserRegister
+from django.core.paginator import Paginator # импортировать класс пагинации
 from .models import *
 
 # Create your views here.
@@ -25,11 +26,6 @@ def menu(request):
 
 
 '''код ниже из мод_18_5(представления)'''
-# псевдо-список
-# users = [
-#     'aleks', 'vlad', 'nikita',
-#     'olga', 'sveta', 'lena'
-# ]
 
 
 # Create your views here.
@@ -101,3 +97,13 @@ def sign_up_by_django(request):
         form = UserRegister()
         info['message'] = form
     return render(request, 'registration_page.html', info)
+
+
+def news(request):
+    news = News.object.all().order_by('date') # перемен. хранит все объекты, связан. с News + сорт. по дате
+    paginator = Paginator(news, 3) # перемен. логика Paginator(ф-ия пагинации)
+    page_number = request.GET.get('page') # перемен. для перемещ. по стр-цам, исп. GET-запрос, извл. параметр page
+    page_object = paginator.get_page(page_number) # перемен.хранит номера страниц, обращ. к paginator - метод get_page,
+    # в нём номера страниц, которые извл.из запроса пользователя
+    return render(request, 'news.html', {'page_object': page_object}) # возвр. пользователю
+    # запрос и шаблон + объекты которые хотим вывести на страницу

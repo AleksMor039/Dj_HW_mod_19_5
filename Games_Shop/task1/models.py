@@ -24,3 +24,15 @@ class Game(models.Model):  # модель представл. игру
         return self.title
 
 
+'''
+Создали модель News с полями title, content, date
+'''
+
+
+class News(models.Model):  # модель представл. новости
+    title = models.CharField(max_length=50)  # назв. новости
+    content = models.TextField()  # текст новости
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
